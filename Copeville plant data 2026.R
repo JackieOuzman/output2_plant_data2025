@@ -17,13 +17,13 @@ site_name <- "Copeville-Farley"
 
 headDir <- paste0(dir, "/work/Output-2/Site-Data/", site_number)
 
-soils_folder <- "/Jackies_working"
+folder <- "/Jackies_working"
 compiled_folder <- "/2025/"
 
 file <- "collated Copeville data step 2.xlsx"
 worksheet <- "collated wide format"
 
-path_file <- paste0(headDir, soils_folder, compiled_folder,file )
+path_file <- paste0(headDir, folder, compiled_folder,file )
 
 df_wide_results <- read_xlsx(path_file, sheet = worksheet, skip = 3) 
 str(df_wide_results)
@@ -34,7 +34,7 @@ df_dates <- read_xlsx(path_file, sheet = "look up tables")
 
 df_dates <- df_dates %>%
   select(Variable, Date) %>%
-  filter(row_number() <= which(Variable == "Harvest Index"))
+  filter(row_number() <= which(Variable == "Thousand Grain Weight (TKW)"))
 
 df_dates <- df_dates %>%
   mutate(Date = format(as.Date(as.numeric(Date), origin = "1899-12-30"), "%d - %m - %Y"))
@@ -107,7 +107,12 @@ df_long_results <- df_long_results %>%
 
 
 df_dates
+unique(df_dates$Variable)
 unique(df_long_results$Variable)
+
+df_dates %>% count(Variable) %>% filter(n > 1)
+
+##### Problem here its 
 
 df_long_results <- df_long_results %>%
   left_join(df_dates, by = "Variable")
@@ -126,7 +131,7 @@ df_long_results <- df_long_results %>%
     )
   )
 file_save <- "collated Copeville data May2026_afterR.csv"
-path_file_save <- paste0(headDir, soils_folder, compiled_folder,file_save )
+path_file_save <- paste0(headDir, folder, compiled_folder,file_save )
 
 write.csv(df_long_results, path_file_save, row.names = FALSE)
 
