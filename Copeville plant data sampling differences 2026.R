@@ -19,15 +19,15 @@ site_name <- "Copeville-Farley"
 
 headDir <- paste0(dir, "/work/Output-2/Site-Data/", site_number)
 
-soils_folder <- "/Jackies_working"
-compiled_folder <- "/2025/"
+folder <- "/Jackies_working/"
+compiled_folder <- "2025/"
 
 
-file <- "compare.xlsx"
+file <- "compare_Copeville.xlsx"
 worksheet1 <- "Harvest Index jackie"
 
 
-path_file <- paste0(headDir, soils_folder, compiled_folder,file )
+path_file <- paste0(headDir, soils_folder, folder,file )
 
 
 df_wide_results <- read_xlsx(path_file, sheet = worksheet1, skip = 0) 
@@ -90,3 +90,13 @@ df_wide_results_long %>%
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank()
   )
+
+
+plot_name <- "compare_Copeville_plot.png"
+
+path_plot <- paste0(headDir,folder, plot_name )
+
+
+ggsave(path_plot, 
+       plot = last_plot(), width = 20, height = 15, units = "cm", dpi = 300)
+
