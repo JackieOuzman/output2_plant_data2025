@@ -153,6 +153,10 @@ df_long_results <- df_long_results %>%
 
 sum(is.na(df_long_results$Value))
 
+df_long_results %>% 
+  filter(Variable == "Yield Machine" & is.na(Value)) %>% 
+  select(PlotID, Variable, Value)
+
 ################################################################################
 ## Save the tidy long dataset
 ################################################################################
